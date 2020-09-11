@@ -7,18 +7,24 @@ import com.xjh.boot.user.po.User;
 import com.xjh.boot.user.service.UserService;
 import com.xjh.boot.user.util.redis.RedisOperator;
 import com.xjh.boot.user.vo.LoginVO;
+import com.xjh.boot.user.vo.UserVO;
 import com.xjh.boot.user.vo.result.FailResult;
 import com.xjh.boot.user.vo.result.Result;
 import com.xjh.boot.user.vo.result.SuccessResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserService userService;
@@ -66,5 +72,19 @@ public class UserController {
         }
         return new FailResult();
     }
+
+    /**
+     * 获取用户信息
+     * 参数通过url传递
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping
+    public Result getUser(@NotNull(message = "id不能为空") Integer id) {
+        UserVO vo = userService.getUser(id);
+        return new SuccessResult<>(vo);
+    }
+
 
 }

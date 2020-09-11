@@ -10,6 +10,8 @@ import com.xjh.boot.user.dao.UserMapper;
 import com.xjh.boot.user.dto.RegisterDTO;
 import com.xjh.boot.user.util.redis.RedisOperator;
 import com.xjh.boot.user.vo.LoginVO;
+import com.xjh.boot.user.vo.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -125,5 +127,20 @@ public class UserService {
     }
 
 
+    /**
+     * 更加用户ID获取用户
+     *
+     * @param id
+     * @return
+     */
+    public UserVO getUser(Integer id) {
+        User user = userMapper.selectByPrimaryKey(id);
+
+        UserVO vo = new UserVO();
+        vo.setId(user.getId());
+        vo.setUserName(user.getUserName());
+        //BeanUtils.copyProperties(vo, user);
+        return vo;
+    }
 
 }
