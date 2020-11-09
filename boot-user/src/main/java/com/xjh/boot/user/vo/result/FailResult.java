@@ -26,6 +26,4 @@ public class FailResult<T> extends Result<T> {
         setData(data);
     }
 
-
-
 }
